@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Tracker | Premium API Tester</title>
+    <meta name="description" content="A stunning, interactive dashboard to test and manage expenses with the Smart Expense Tracker REST API.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i data-lucide="wallet"></i>
+                </div>
+                <div>
+                    <h1>Smart Expense Tracker</h1>
+                    <p class="subtitle">API Testing Dashboard & Analytics</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="/swagger-ui.html" target="_blank" class="btn btn-outline">
+                    <i data-lucide="file-text"></i>
+                    <span>OpenAPI / Swagger Docs</span>
+                </a>
+                <button id="refresh-btn" class="btn btn-secondary" title="Refresh all data">
+                    <i data-lucide="refresh-cw"></i>
+                    <span>Refresh Data</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Metrics Dashboard Cards -->
+        <section class="metrics-grid">
+            <div class="metric-card primary-gradient">
+                <div class="metric-header">
+                    <span>Overall Total Expenses</span>
+                    <i data-lucide="trending-down"></i>
+                </div>
+                <div class="metric-value" id="total-amount-display">$0.00</div>
+                <div class="metric-footer">Calculated from <span id="total-count-display">0</span> expenses</div>
+            </div>
+
+            <div class="metric-card glass-card">
+                <div class="metric-header">
+                    <span>Top Spending Category</span>
+                    <i data-lucide="pie-chart"></i>
+                </div>
+                <div class="metric-value" id="top-category-display">—</div>
+                <div class="metric-footer" id="top-category-amount">$0.00 (0%)</div>
+            </div>
+
+            <div class="metric-card glass-card">
+                <div class="metric-header">
+                    <span>Active Months</span>
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="metric-value" id="active-months-display">0</div>
+                <div class="metric-footer">Grouped chronological summary</div>
+            </div>
+        </section>
+
+        <!-- Main Content Layout -->
+        <main class="main-layout">
+            <!-- Left Column: Expense Form & Monthly Breakdown -->
+            <div class="left-col">
+                <!-- Add Expense Card -->
+                <section class="card glass-card form-section">
+                    <div class="card-header">
+                        <h2><i data-lucide="plus-circle"></i> Add New Expense</h2>
+                    </div>
+                    <form id="expense-form">
+                        <div class="form-group">
+                            <label for="expense-title">Title / Description</label>
+                            <input type="text" id="expense-title" placeholder="e.g. Lunch with team, AWS bill..." required autocomplete="off">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expense-amount">Amount ($)</label>
+                                <input type="number" id="expense-amount" step="0.01" min="0.01" placeholder="0.00" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expense-category">Category</label>
+                                <select id="expense-category" required>
+                                    <option value="" disabled selected>Select Category</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expense-date">Date</label>
+                            <input type="date" id="expense-date" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-btn">
+                            <i data-lucide="plus"></i>
+                            <span>Create Expense</span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Category Breakdown Summary Card -->
+                <section class="card glass-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="bar-chart-2"></i> Category Breakdown</h2>
+                    </div>
+                    <div id="category-breakdown-list" class="breakdown-list">
+                        <p class="empty-state">No categories recorded yet.</p>
+                    </div>
+                </section>
+
+                <!-- Monthly Summary (Bonus Feature Card) -->
+                <section class="card glass-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="clock"></i> Monthly Aggregations (Bonus)</h2>
+                    </div>
+                    <div id="monthly-summary-list" class="monthly-list">
+                        <p class="empty-state">No monthly records yet.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Expense Table & Filtering -->
+            <div class="right-col">
+                <section class="card glass-card table-section">
+                    <div class="table-controls">
+                        <div class="card-header">
+                            <h2><i data-lucide="list"></i> All Expenses</h2>
+                        </div>
+                        <div class="filter-pills" id="category-filters">
+                            <button class="pill active" data-category="ALL">All</button>
+                            <button class="pill" data-category="Food">Food</button>
+                            <button class="pill" data-category="Transport">Transport</button>
+                            <button class="pill" data-category="Utilities">Utilities</button>
+                            <button class="pill" data-category="Entertainment">Entertainment</button>
+                            <button class="pill" data-category="Shopping">Shopping</button>
+                            <button class="pill" data-category="Healthcare">Healthcare</button>
+                            <button class="pill" data-category="Other">Other</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="expenses-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th class="text-right">Amount</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenses-tbody">
+                                <!-- Dynamically filled by JavaScript -->
+                                <tr>
+                                    <td colspan="5" class="empty-table">Loading expenses...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

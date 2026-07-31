@@ -1,1 +1,19 @@
-[ ]
+[ {
+  "id" : "ed1f6dff-8701-4395-aa9f-a6bc5671ea9e",
+  "title" : "Team Lunch",
+  "amount" : 45.50,
+  "category" : "Food",
+  "date" : "2026-07-31"
+}, {
+  "id" : "49835463-c584-4ee6-bd19-e800324d9b03",
+  "title" : "Uber Ride to Office",
+  "amount" : 25.00,
+  "category" : "Transport",
+  "date" : "2026-07-31"
+}, {
+  "id" : "6857daaf-9fe5-4926-823d-1def11939ccd",
+  "title" : "Weekly Groceries",
+  "amount" : 120.00,
+  "category" : "Food",
+  "date" : "2026-06-15"
+} ]
