@@ -79,6 +79,25 @@ The test suite runs with an isolated temporary JSON file (`target/test-data/test
 
 ---
 
+## 4. (Bonus / Optional) Run with Docker Compose
+
+If you prefer running the application as a containerized Docker service without installing a local JVM:
+
+```bash
+# Start container in detached mode using Docker Compose
+docker compose up -d
+
+# View container logs
+docker compose logs -f
+
+# Stop container
+docker compose down
+```
+- Uses a single standalone `docker-compose.yml` file with the official `eclipse-temurin:17-jdk-jammy` image.
+- Automatically mounts the project and persists data on your host machine in `data/expenses.json`.
+
+---
+
 ## API Reference & Examples
 
 ### 1. Add an Expense

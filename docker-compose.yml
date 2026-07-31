@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  expense-tracker-api:
+    image: eclipse-temurin:17-jdk-jammy
+    container_name: smart-expense-tracker-api
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    environment:
+      - STORAGE_FILE_PATH=data/expenses.json
+    command: ["./mvnw", "spring-boot:run"]
+    restart: unless-stopped

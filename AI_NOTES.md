@@ -10,6 +10,7 @@ This document provides an honest, detailed breakdown of how AI tools (including 
 - **Boilerplate Spring Boot & DTO Classes**: Initial scaffolding for `Expense.java`, `ExpenseCreateRequest.java`, and `ExpenseSummary.java` was generated using AI assistants to quickly generate getters, setters, constructors, and Jakarta validation annotations (`@NotBlank`, `@Positive`, `@NotNull`).
 - **OpenAPI / Swagger Annotations**: AI was used to draft descriptive Swagger annotations (`@Operation`, `@Tag`, `@Parameter`) on `ExpenseController.java` to make the interactive API documentation at `/swagger-ui.html` self-explanatory.
 - **Initial MockMvc Test Shells**: The structure of `ExpenseControllerTest.java`, including basic `MockMvcRequestBuilders` boilerplate, was drafted with AI assistance.
+- **Initial Docker Compose Scaffolding**: AI assisted in generating the initial containerization setup for optional Docker deployment.
 
 ### Written / Refactored Manually by Human Developer
 - **Evaluator-Compatible Maven Directory Mapping**: Standard Maven/Spring Boot projects assume `src/main/java` and `src/test/java`. However, the automated grading script requires an exact root directory structure of `src/` and `tests/`. I manually designed and configured the custom source directory mappings in `pom.xml`:
@@ -38,6 +39,9 @@ This document provides an honest, detailed breakdown of how AI tools (including 
    - *Why changed*: AI initially suggested returning `200 OK` for expense deletion and creation. I modified `POST /api/v1/expenses` to return `201 Created` and `DELETE /api/v1/expenses/{id}` to return `204 No Content` on success and `404 Not Found` when attempting to delete a non-existent ID.
 4. **Comprehensive Edge-Case Testing**:
    - *What was tested*: Added test cases in `ExpenseControllerTest.java` to verify negative amounts, empty titles, case-insensitive category filtering (`"FOOD"` vs `"Food"`), and non-existent IDs.
+5. **Simplification of Docker Containerization Architecture**:
+   - *What was tested*: Tested containerizing the app with both a multi-stage `Dockerfile` and a standalone `docker-compose.yml`.
+   - *Why changed*: The AI initially suggested a complex multi-stage Dockerfile. I simplified the architecture down to a single clean `docker-compose.yml` file using the official `eclipse-temurin:17-jdk-jammy` image and `./mvnw spring-boot:run` to minimize configuration overhead and keep the root directory clean.
 
 ---
 
@@ -52,3 +56,6 @@ This document provides an honest, detailed breakdown of how AI tools (including 
 3. **Rejected: Global Static In-Memory List Without Disk Persistence**:
    - *AI Suggestion*: For simplicity, an AI prompt suggested storing expenses purely in a static `CopyOnWriteArrayList` in memory.
    - *Reason for Rejection*: While allowed, purely in-memory data disappears when the application restarts. Storing data in a local JSON file (`data/expenses.json`) provides real-world persistence while remaining lightweight and easy to inspect.
+4. **Rejected: Complex Multi-Stage `Dockerfile` for Basic Containerization**:
+   - *AI Suggestion*: The AI suggested adding both a multi-stage `Dockerfile` and a `docker-compose.yml` file to the root directory.
+   - *Reason for Rejection*: For a lightweight Spring Boot service, maintaining a separate `Dockerfile` added unnecessary complexity. A single standalone `docker-compose.yml` file utilizing the official `eclipse-temurin:17-jdk-jammy` image is simpler, cleaner, and equally effective.
