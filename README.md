@@ -1,4 +1,4 @@
-# Smart Expense Tracker API
+# Split-it (Smart Expense Tracker API)
 
 A production-grade REST API built with **Java 17** and **Spring Boot 3** to manage personal expenses. It supports persistent JSON file storage (`data/expenses.json`), category filtering, summary calculations (overall and by category), a bonus monthly summary endpoint, and interactive OpenAPI/Swagger documentation.
 
