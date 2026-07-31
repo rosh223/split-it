@@ -17,6 +17,8 @@ split-it/
 └── tests/                 # JUnit 5 & MockMvc test suite
 ```
 
+![alt text](image.png)
+
 ---
 
 ## Prerequisites
