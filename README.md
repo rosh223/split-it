@@ -100,6 +100,16 @@ docker compose down
 
 ---
 
+## 5. Postman Collection & Cloud Testing
+
+- **Option A (Direct File Import - Recommended & Free)**: An automated Postman collection file is included in the project root: **`split-it.postman_collection.json`**. Simply click **Import** in Postman and select this file to start testing instantly.
+- **Option B (Postman Cloud Workspace Link)**:
+  - You can also view the collection via our Postman Cloud workspace:  
+    [Smart Expense Tracker Postman Collection](https://rosh223176-1877132.postman.co/workspace/9a37ba13-0a4d-48dd-85e5-14b99bffa51d/collection/56118617-0a9a8f83-347d-431f-bfac-08cf6706b282?action=share&source=copy-link&creator=56118617)
+  - *Note: When you click the link above, a Postman popup will appear asking to **Request Access**. Simply click **Request Access** and I will approve your access request for free.*
+
+---
+
 ## API Reference & Examples
 
 ### 1. Add an Expense
