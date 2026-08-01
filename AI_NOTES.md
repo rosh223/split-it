@@ -8,6 +8,7 @@ This document provides an honest, detailed breakdown of how AI tools (including 
 
 ### AI-Generated Components (with human guidance & specification)
 - **Boilerplate Spring Boot & DTO Classes**: Initial scaffolding for `Expense.java`, `ExpenseCreateRequest.java`, and `ExpenseSummary.java` was generated using AI assistants to quickly generate getters, setters, constructors, and Jakarta validation annotations (`@NotBlank`, `@Positive`, `@NotNull`).
+- **Frontend UI & Interactive API Tester (`index.html` & `styles.css`)**: The visual structure, glassmorphic CSS styling tokens, and initial JavaScript `fetch()` boilerplate for the web testing dashboard in `src/resources/static/` were drafted with AI assistance.
 - **OpenAPI / Swagger Annotations**: AI was used to draft descriptive Swagger annotations (`@Operation`, `@Tag`, `@Parameter`) on `ExpenseController.java` to make the interactive API documentation at `/swagger-ui.html` self-explanatory.
 - **Initial MockMvc Test Shells**: The structure of `ExpenseControllerTest.java`, including basic `MockMvcRequestBuilders` boilerplate, was drafted with AI assistance.
 - **Initial Docker Compose Scaffolding**: AI assisted in generating the initial containerization setup for optional Docker deployment.
